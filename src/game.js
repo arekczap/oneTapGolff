@@ -1,3 +1,12 @@
+import "./main.css";
+// import ball from './assets/object_ball.png';
+
+
+//fdbc
+
+
+
+
 // (function () {
 //   let canvas = document.getElementById("canvas"),
 //     ctx = canvas.getContext("2d");
@@ -20,40 +29,51 @@
 //     canvas.height = window.innerHeight;
 //     redraw();
 //   }
-
-console.log("zialasasa")
+// console.log("dziala")
 
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
+ctx.fillStyle = "rgba(255, 255, 255, 1)";
+
 canvas.width = 900;
 canvas.height = 700;
 
-const ball = new Image();
-ball.src = "assets/object_ball.png";
+let increasingHeightParabola = 0;
+let increasingDostanceParabola = 0;
 
-ball.onload = function () {
+// const ball = new Image();
+// ball.src = require("./assets/object_ball.png");
+
+
+
     // ========================================================================================================
     class Player {
-        constructor(parametrA, firstZeroPositionOfX, secondZeroPositionOfX) {
-            this.a = parametrA;
-            this.x1 = firstZeroPositionOfX;
+        constructor() {
+            this.a = 0.0007;
+            this.x1 = canvas.width/5;
             this.y1 = this.y2 = 1;
-            this.x2 = secondZeroPositionOfX;
+            this.x2 = 120;
             this.sum = 0;
             this.y = 0;
             this.b = 0;
             this.c = 0;
-            this.velocityX = 7;
-            this.velocityY = 7;
-            this.correctionPosYBall = 500;
-            this.centerOfBall = 29;
+            this.vx = 3;
+            this.vy = 0.0001;
+            this.correctionPosYBall = 530;
         }
 
-        calculateVelocity() {
-            this.y += this.velocityY;
-            this.sum += this.velocityX;
+        initialConditions() {
+            this.sum = 0;
+            this.y = 0;
+            this.b = 0;
+            this.c = 0;
+            this.x2 = 120;
+
         }
+
+
+
 
         calculateParabola() {
             this.b =
@@ -64,16 +84,18 @@ ball.onload = function () {
             this.sum = this.x1;
         }
 
-        calculatePath() {}
-
         drawStartPosOfBall() {
-            ctx.drawImage(
-                ball,
-                this.x1 - 29,
-                this.correctionPosYBall - 29,
-                ball.naturalWidth,
-                ball.naturalWidth
-            );
+
+                // ctx.drawImage(
+                //   ball,
+                //   this.sum - this.centerOfBall,
+                //   this.y + this.correctionPosYBall - this.centerOfBall,
+                //   ball.width,
+                //   ball.height
+                // );
+
+                console.log(ball.width,ball.height)
+
         }
 
         calculateParabolicFlight() {
@@ -82,56 +104,62 @@ ball.onload = function () {
                 4;
             this.sum++;
 
-            // ctx.drawImage(
-            //   ball,
-            //   this.sum - this.centerOfBall,
-            //   this.y + this.correctionPosYBall - this.centerOfBall,
-            //   ball.width,
-            //   ball.height
-            // );
 
-            this.calculateVelocity();
+
+
+
+
+            // this.calculateVelocity();
+        }
+
+        updatePath() {
+
         }
 
         drawParabolicFlight() {
-            ctx.fillStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillRect(this.sum, this.y + this.correctionPosYBall, 3, 3);
+            ctx.fillRect(this.sum, this.y + this.correctionPosYBall, 2, 2);
         }
     }
 
-    const player = new Player(0.004, canvas.width / 7, canvas.width / 7 + 100);
-    // player.drawStartPosOfBall();
-    player.calculateParabola();
+    const player = new Player();
+    player.drawStartPosOfBall()
 
-    function ballMovement() {
-        // let animationFrame = requestAnimationFrame(ballMovement);\
+
+    function createBallPath() {
+        player.calculateParabola();
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        for (let i = player.x1; i < player.x2; i++) {
+        for (let i = player.x1; i < player.x2 + 200; i++) {
             player.calculateParabolicFlight();
             player.drawParabolicFlight();
-            player.a += 0.0001;
-            player.x2 += 5;
-            console.log("poszlo");
         }
-        // if (player.y < 8) {
-        //   player.calculateParabolicFlight();
-        //   player.drawParabolicFlight();
-        // }
+        player.x2 += player.vx;
 
-        // if (player.y > 8) {
-        //   // cancelAnimationFrame(animationFrame);
-        //   console.log("kolizja");
-        // }
+
     }
 
-    document.addEventListener("keypress", (e) => {
+    document.addEventListener("keydown", (e) => {
+
+
         if (e.keyCode === 32) {
-            ballMovement();
-            // console.log("wykonano");
+            requestAnimationFrame(createBallPath);
         }
     });
-};
+
+
+    document.addEventListener("keyup", (e) => {
+        if (e.keyCode === 32) {
+            // ballMovement();
+            // increasing += .1
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            player.initialConditions()
+
+            player.a += player.vy;
+            player.x2 += player.vx;
+        }
+    });
+
 
 // window.onload = function () {
 //   // let ratioHeight = canvas.height / backgroundImage.width;

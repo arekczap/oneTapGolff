@@ -1,3 +1,4 @@
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require("path");
 
 module.exports = {
@@ -6,6 +7,9 @@ module.exports = {
         filename: "main.js",
         path: path.resolve(__dirname, "./dist")
     },
+    plugins: [new HtmlWebpackPlugin({
+        template: "./src/index.html",
+    })],
     devServer: {
         contentBase: './dist'
     },
@@ -23,7 +27,45 @@ module.exports = {
                         presets: ["@babel/preset-env"]
                     }
                 }
-            }
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/i,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            //                 loader: 'file-loader?name=/img/[name].[ext]',
+                            //                 // name: '[name]-[hash].[ext]',
+                            name: '[name]-[hash].[ext]',
+                            outputPath: 'images'
+                        },
+                    },
+                ],
+            },
+            // {
+            //     test: /\.(png|jpe?g|gif|webp|awif|svg)$/i,
+            //     use: [
+            //         {
+            //             loader: 'file-loader',
+            //             options: {
+            //                 loader: 'file-loader?name=/img/[name].[ext]',
+            //                 // name: '[name]-[hash].[ext]',
+            //                 outputPath: 'images'
+            //             },
+            //         },
+            //     ],
+            // },
+            {
+                test: /\.html$/,
+                use: ["html-loader"]
+            },
+            {
+                test: /\.css$/i,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ],
+            },
         ]
     }
 }
