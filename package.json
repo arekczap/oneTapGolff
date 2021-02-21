@@ -16,7 +16,9 @@
     "html-loader": "^2.0.0",
     "html-webpack-plugin": "^5.2.0",
     "style-loader": "^2.0.0",
+    "url-loader": "^4.1.1",
     "webpack": "^5.23.0",
+    "webpack-canvas-loader": "^1.0.1",
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2"
   },
