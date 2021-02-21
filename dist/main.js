@@ -671,6 +671,9 @@ var __webpack_exports__ = {};
   !*** ./src/game.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* binding */ Player)
+/* harmony export */ });
 /* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ "./src/main.css");
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -678,150 +681,194 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
- // import dot from './assets/object_dot.png';
+ //canvas and context definition
 
 var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d");
-ctx.fillStyle = "rgba(255, 255, 255, 1)";
+var ctx = canvas.getContext("2d"); //canvas fill
+
+ctx.fillStyle = "rgba(255, 255, 255, 1)"; //canvas dimensions
+
 canvas.width = 900;
-canvas.height = 700;
+canvas.height = 700; //images definitions
+
 var ball = new Image();
+var dot = new Image(); //images path
+
 ball.src = __webpack_require__(/*! ../../src/assets/object_ball.png */ "./src/assets/object_ball.png");
-var dot = new Image();
 dot.src = __webpack_require__(/*! ../../src/assets/object_dot.png */ "./src/assets/object_dot.png"); // ========================================================================================================
 
 var Player = /*#__PURE__*/function () {
   function Player() {
     _classCallCheck(this, Player);
 
-    this.a = 0.0025;
-    this.x1 = 70;
+    this.a = 0.0032;
+    this.startPosOfBall = 100;
     this.y1 = this.y2 = 1;
-    this.x2 = 0;
-    this.sum = 0;
+    this.startPosOfPath = 150;
+    this.pointXOfParabola = 0;
     this.y = 0;
     this.b = 0;
     this.c = 0;
-    this.vx = 5;
+    this.vx = 3;
     this.groundLevel = 475;
     this.correctionPosOfParabola = 32;
-    this.parabolaFinalDistance = 0;
-    this.velocityOfBall = 7;
+    this.parabolaFinalDistance = 50;
+    this.velocityOfBall = 10;
   }
 
   _createClass(Player, [{
-    key: "initialConditions",
-    value: function initialConditions() {
-      this.b = 0;
-      this.c = 0;
-      this.x2 = 120;
+    key: "setInitialConditions",
+    value: function setInitialConditions() {
+      this.b = 1;
+      this.c = 1;
+      this.startPosOfPath = 50;
     }
   }, {
-    key: "increaseDistanceOfBallPath",
-    value: function increaseDistanceOfBallPath() {
-      player.x2 += player.vx;
+    key: "increaseDistanceBallPath",
+    value: function increaseDistanceBallPath() {
+      player.startPosOfPath += player.vx;
     }
   }, {
-    key: "clearRectangle",
-    value: function clearRectangle() {
+    key: "increaseSpeedOFDrawBallPathForNextFound",
+    value: function increaseSpeedOFDrawBallPathForNextFound() {
+      player.vx += .5;
+    } //increasing speed of draw ball path
+
+  }, {
+    key: "increaseVelocityBallFlight",
+    value: function increaseVelocityBallFlight() {
+      player.pointXOfParabola += player.velocityOfBall;
+      player.y += player.velocityOfBall;
+    }
+  }, {
+    key: "clearCanvasView",
+    value: function clearCanvasView() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
   }, {
     key: "calculateParabola",
     value: function calculateParabola(x2) {
-      this.b = (this.y1 - this.y2 - this.a * (this.x1 * this.x1 - x2 * x2)) / (this.x1 - x2);
-      this.c = this.y1 - this.a * this.x1 * this.x1 - this.b * this.x1;
-      this.sum = this.x1;
+      this.b = (this.y1 - this.y2 - this.a * (this.startPosOfBall * this.startPosOfBall - x2 * x2)) / (this.startPosOfBall - x2);
+      this.c = this.y1 - this.a * this.startPosOfBall * this.startPosOfBall - this.b * this.startPosOfBall;
+      this.pointXOfParabola = this.startPosOfBall;
     }
   }, {
     key: "calculateParabolicFlight",
     value: function calculateParabolicFlight() {
-      this.y = Math.round(this.a * this.sum * this.sum + this.b * this.sum + this.c) - 4;
-      this.sum++;
-    }
-  }, {
-    key: "drawStartPosOfBall",
-    value: function drawStartPosOfBall() {
-      ctx.drawImage(ball, this.x1, this.groundLevel, ball.width, ball.height);
-    }
-  }, {
-    key: "drawFinalBallFLight",
-    value: function drawFinalBallFLight(posX, posY) {
-      ctx.drawImage(ball, posX, posY, ball.width, ball.height);
-    }
-  }, {
-    key: "generateFinalPath",
-    value: function generateFinalPath() {
-      this.parabolaFinalDistance = this.x2;
-    }
-  }, {
-    key: "drawParabolicPath",
-    value: function drawParabolicPath(valueX, valueY) {
-      ctx.fillRect(valueX + this.correctionPosOfParabola, valueY + this.groundLevel + this.correctionPosOfParabola, 2, 2);
+      this.y = Math.round(this.a * this.pointXOfParabola * this.pointXOfParabola + this.b * this.pointXOfParabola + this.c) - -this.groundLevel;
+      this.pointXOfParabola++;
     }
   }, {
     key: "drawImage",
     value: function drawImage(image, valueX, valueY) {
-      ctx.drawImage(image, valueX, valueY + this.groundLevel + 5, image.width, image.height);
+      ctx.drawImage(image, image === "dot" ? valueX += 1 : valueX, image === "dot" ? valueY += 10 : valueY, image.width, image.height);
+    }
+  }, {
+    key: "getFinalDistancePath",
+    value: function getFinalDistancePath() {
+      this.parabolaFinalDistance = this.startPosOfPath;
+    }
+  }, {
+    key: "ballFlightAnimation",
+    value: function ballFlightAnimation() {
+      var animationFlyingBall = requestAnimationFrame(player.ballFlightAnimation);
+      console.log("początek animacji");
+      player.clearCanvasView();
+      player.calculateParabolicFlight();
+      player.drawImage(ball, player.pointXOfParabola + player.correctionPosOfParabola / 2, player.y - player.correctionPosOfParabola / 2); //velocity of ball
+
+      player.increaseVelocityBallFlight(); // wysokość na jaką ma spaść piłka
+
+      if (player.y >= 550) {
+        cancelAnimationFrame(animationFlyingBall);
+        console.log(player.y);
+      }
+    }
+  }, {
+    key: "recalculateParabolaToFinalFlight",
+    value: function recalculateParabolaToFinalFlight() {
+      player.calculateParabola(player.parabolaFinalDistance);
+      player.ballFlightAnimation();
+    }
+  }, {
+    key: "updateBallPath",
+    value: function updateBallPath() {
+      player.calculateParabola(player.startPosOfPath);
+      player.clearCanvasView();
+
+      for (var i = player.startPosOfBall; i < player.startPosOfPath + 50; i++) {
+        player.calculateParabolicFlight();
+        player.pointXOfParabola += 30;
+        player.drawImage(dot, player.pointXOfParabola - 15, player.y);
+      }
+
+      player.drawImage(ball, player.startPosOfBall, player.groundLevel);
+      player.increaseDistanceBallPath();
     }
   }]);
 
   return Player;
 }();
 
+
 var player = new Player();
 
 ball.onload = function () {
-  player.drawStartPosOfBall();
+  player.drawImage(ball, player.startPosOfBall, player.groundLevel);
 };
-
-function createBallPath() {
-  player.calculateParabola(player.x2);
-  player.clearRectangle();
-
-  for (var i = player.x1; i < player.x2 + 150; i++) {
-    player.calculateParabolicFlight();
-    player.sum += 40;
-    player.drawImage(dot, player.sum - 20, player.y); // player.drawParabolicPath(player.sum - 50, player.y);
-  }
-
-  player.drawStartPosOfBall();
-  player.increaseDistanceOfBallPath();
-}
-
-function putBall() {
-  animationFlyingBall = requestAnimationFrame(putBall); //velocity of ball
-
-  player.sum += player.velocityOfBall;
-  player.y += player.velocityOfBall;
-  player.clearRectangle();
-  player.calculateParabolicFlight();
-  player.drawImage(ball, player.sum, player.y);
-
-  if (player.y >= player.y1) {
-    cancelAnimationFrame(animationFlyingBall);
-  }
-}
 
 document.addEventListener("keydown", function (e) {
   if (e.keyCode === 32) {
-    createBallPath();
+    player.updateBallPath();
   }
 });
-var animationFlyingBall;
 document.addEventListener("keyup", function (e) {
   if (e.keyCode === 32) {
-    player.clearRectangle();
-    player.generateFinalPath();
-    player.initialConditions();
-    player.drawStartPosOfBall(); //recalculate new parabola to final put ball
+    //get distance to draw final path
+    player.getFinalDistancePath(); //set default values after drawing final path to final ball animation
 
-    player.calculateParabola(player.parabolaFinalDistance);
-    putBall(); //increasing speed of draw ball path
+    player.setInitialConditions(); //calculating and  ball flight animation
 
-    player.vx += 1;
+    player.recalculateParabolaToFinalFlight(); //increasing speed of draw ball path
+
+    player.increaseSpeedOFDrawBallPathForNextFound();
   }
-});
+}); //
+// class InitEvents extends Player {
+//
+//
+//   init() {
+//       document.addEventListener("keydown", (e) => {
+//           if (e.keyCode === 32) {
+//               Player.updateBallPath();
+//           }
+//       });
+//
+//
+//       document.addEventListener("keyup", (e) => {
+//           if (e.keyCode === 32) {
+//
+//               //get distance to draw final path
+//               Player.getFinalDistancePath()
+//
+//               //set default values after drawing final path to final ball animation
+//               player.setInitialConditions()
+//
+//               //calculating and  ball flight animation
+//               player.recalculateParabolaToFinalFlight()
+//
+//               //increasing speed of draw ball path
+//               player.increaseSpeedOFDrawBallPathForNextFound()
+//           }
+//       });
+//
+//   }
+//
+// }
+//
+//
+// let initEvents = new InitEvents();
+// initEvents.init()
 })();
 
 /******/ })()
