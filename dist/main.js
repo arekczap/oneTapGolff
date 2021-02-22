@@ -1,6 +1,61 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/utilities.js":
+/*!**************************!*\
+  !*** ./src/utilities.js ***!
+  \**************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var Utilities = /*#__PURE__*/function () {
+  function Utilities() {
+    _classCallCheck(this, Utilities);
+
+    this.canvas = document.getElementById("canvas");
+    ;
+    this.ctx = this.canvas.getContext("2d");
+  }
+
+  _createClass(Utilities, [{
+    key: "createCanvas",
+    value: function createCanvas() {
+      this.ctx.fillStyle = "rgba(255, 255, 255, 1)"; //canvas dimensions
+
+      this.canvas.width = 900;
+      this.canvas.height = 700;
+    }
+  }, {
+    key: "clearCanvasView",
+    value: function clearCanvasView() {
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+  }, {
+    key: "drawImage",
+    value: function drawImage(image, valueX, valueY) {
+      this.ctx.drawImage(image, image === "dot" ? valueX += 1 : valueX, image === "dot" ? valueY += 10 : valueY, image.width, image.height);
+    }
+  }]);
+
+  return Utilities;
+}();
+
+var utilities = new Utilities();
+utilities.createCanvas();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (utilities);
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/dist/cjs.js!./src/main.css":
 /*!************************************************************!*\
   !*** ./node_modules/css-loader/dist/cjs.js!./src/main.css ***!
@@ -212,26 +267,6 @@ module.exports = function (url, options) {
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "assets/14db8644caeb3f4298c7e18aa1d67159-background.png";
-
-/***/ }),
-
-/***/ "./src/assets/object_ball.png":
-/*!************************************!*\
-  !*** ./src/assets/object_ball.png ***!
-  \************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "assets/8152f7183fd315345774f6fb1464d5d7-object_ball.png";
-
-/***/ }),
-
-/***/ "./src/assets/object_dot.png":
-/*!***********************************!*\
-  !*** ./src/assets/object_dot.png ***!
-  \***********************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-module.exports = __webpack_require__.p + "assets/d77a6ae75a3002decf4046ba367346ca-object_dot.png";
 
 /***/ }),
 
@@ -671,204 +706,13 @@ var __webpack_exports__ = {};
   !*** ./src/game.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* binding */ Player)
-/* harmony export */ });
 /* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ "./src/main.css");
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
+ // import "./initEvents"
+// import "./shotingPath"
+// import "./playerBall"
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
- //canvas and context definition
-
-var canvas = document.getElementById("canvas");
-var ctx = canvas.getContext("2d"); //canvas fill
-
-ctx.fillStyle = "rgba(255, 255, 255, 1)"; //canvas dimensions
-
-canvas.width = 900;
-canvas.height = 700; //images definitions
-
-var ball = new Image();
-var dot = new Image(); //images path
-
-ball.src = __webpack_require__(/*! ../../src/assets/object_ball.png */ "./src/assets/object_ball.png");
-dot.src = __webpack_require__(/*! ../../src/assets/object_dot.png */ "./src/assets/object_dot.png"); // ========================================================================================================
-
-var Player = /*#__PURE__*/function () {
-  function Player() {
-    _classCallCheck(this, Player);
-
-    this.a = 0.0032;
-    this.startPosOfBall = 100;
-    this.y1 = this.y2 = 1;
-    this.startPosOfPath = 150;
-    this.pointXOfParabola = 0;
-    this.y = 0;
-    this.b = 0;
-    this.c = 0;
-    this.vx = 3;
-    this.groundLevel = 475;
-    this.correctionPosOfParabola = 32;
-    this.parabolaFinalDistance = 50;
-    this.velocityOfBall = 10;
-  }
-
-  _createClass(Player, [{
-    key: "setInitialConditions",
-    value: function setInitialConditions() {
-      this.b = 1;
-      this.c = 1;
-      this.startPosOfPath = 50;
-    }
-  }, {
-    key: "increaseDistanceBallPath",
-    value: function increaseDistanceBallPath() {
-      player.startPosOfPath += player.vx;
-    }
-  }, {
-    key: "increaseSpeedOFDrawBallPathForNextFound",
-    value: function increaseSpeedOFDrawBallPathForNextFound() {
-      player.vx += .5;
-    } //increasing speed of draw ball path
-
-  }, {
-    key: "increaseVelocityBallFlight",
-    value: function increaseVelocityBallFlight() {
-      player.pointXOfParabola += player.velocityOfBall;
-      player.y += player.velocityOfBall;
-    }
-  }, {
-    key: "clearCanvasView",
-    value: function clearCanvasView() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  }, {
-    key: "calculateParabola",
-    value: function calculateParabola(x2) {
-      this.b = (this.y1 - this.y2 - this.a * (this.startPosOfBall * this.startPosOfBall - x2 * x2)) / (this.startPosOfBall - x2);
-      this.c = this.y1 - this.a * this.startPosOfBall * this.startPosOfBall - this.b * this.startPosOfBall;
-      this.pointXOfParabola = this.startPosOfBall;
-    }
-  }, {
-    key: "calculateParabolicFlight",
-    value: function calculateParabolicFlight() {
-      this.y = Math.round(this.a * this.pointXOfParabola * this.pointXOfParabola + this.b * this.pointXOfParabola + this.c) - -this.groundLevel;
-      this.pointXOfParabola++;
-    }
-  }, {
-    key: "drawImage",
-    value: function drawImage(image, valueX, valueY) {
-      ctx.drawImage(image, image === "dot" ? valueX += 1 : valueX, image === "dot" ? valueY += 10 : valueY, image.width, image.height);
-    }
-  }, {
-    key: "getFinalDistancePath",
-    value: function getFinalDistancePath() {
-      this.parabolaFinalDistance = this.startPosOfPath;
-    }
-  }, {
-    key: "ballFlightAnimation",
-    value: function ballFlightAnimation() {
-      var animationFlyingBall = requestAnimationFrame(player.ballFlightAnimation);
-      console.log("początek animacji");
-      player.clearCanvasView();
-      player.calculateParabolicFlight();
-      player.drawImage(ball, player.pointXOfParabola + player.correctionPosOfParabola / 2, player.y - player.correctionPosOfParabola / 2); //velocity of ball
-
-      player.increaseVelocityBallFlight(); // wysokość na jaką ma spaść piłka
-
-      if (player.y >= 550) {
-        cancelAnimationFrame(animationFlyingBall);
-        console.log(player.y);
-      }
-    }
-  }, {
-    key: "recalculateParabolaToFinalFlight",
-    value: function recalculateParabolaToFinalFlight() {
-      player.calculateParabola(player.parabolaFinalDistance);
-      player.ballFlightAnimation();
-    }
-  }, {
-    key: "updateBallPath",
-    value: function updateBallPath() {
-      player.calculateParabola(player.startPosOfPath);
-      player.clearCanvasView();
-
-      for (var i = player.startPosOfBall; i < player.startPosOfPath + 50; i++) {
-        player.calculateParabolicFlight();
-        player.pointXOfParabola += 30;
-        player.drawImage(dot, player.pointXOfParabola - 15, player.y);
-      }
-
-      player.drawImage(ball, player.startPosOfBall, player.groundLevel);
-      player.increaseDistanceBallPath();
-    }
-  }]);
-
-  return Player;
-}();
-
-
-var player = new Player();
-
-ball.onload = function () {
-  player.drawImage(ball, player.startPosOfBall, player.groundLevel);
-};
-
-document.addEventListener("keydown", function (e) {
-  if (e.keyCode === 32) {
-    player.updateBallPath();
-  }
-});
-document.addEventListener("keyup", function (e) {
-  if (e.keyCode === 32) {
-    //get distance to draw final path
-    player.getFinalDistancePath(); //set default values after drawing final path to final ball animation
-
-    player.setInitialConditions(); //calculating and  ball flight animation
-
-    player.recalculateParabolaToFinalFlight(); //increasing speed of draw ball path
-
-    player.increaseSpeedOFDrawBallPathForNextFound();
-  }
-}); //
-// class InitEvents extends Player {
-//
-//
-//   init() {
-//       document.addEventListener("keydown", (e) => {
-//           if (e.keyCode === 32) {
-//               Player.updateBallPath();
-//           }
-//       });
-//
-//
-//       document.addEventListener("keyup", (e) => {
-//           if (e.keyCode === 32) {
-//
-//               //get distance to draw final path
-//               Player.getFinalDistancePath()
-//
-//               //set default values after drawing final path to final ball animation
-//               player.setInitialConditions()
-//
-//               //calculating and  ball flight animation
-//               player.recalculateParabolaToFinalFlight()
-//
-//               //increasing speed of draw ball path
-//               player.increaseSpeedOFDrawBallPathForNextFound()
-//           }
-//       });
-//
-//   }
-//
-// }
-//
-//
-// let initEvents = new InitEvents();
-// initEvents.init()
+ // ========================================================================================================
 })();
 
 /******/ })()

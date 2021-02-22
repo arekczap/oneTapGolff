@@ -1,13 +1,11 @@
-import player from "./playerBall"
 import shootingPath from "./shotingPath";
-
 
 class InitEvents {
 
     init() {
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 32) {
-                shootingPath.updateBallPath();
+                shootingPath.updateFlightPath();
             }
         });
 
@@ -16,16 +14,16 @@ class InitEvents {
             if (e.keyCode === 32) {
 
                 //get distance to draw final path
-                player.getFinalDistancePath()
+                shootingPath.getFinalDistancePath()
 
                 //set default values after drawing final path to final ball animation
-                player.setInitialConditions()
+                shootingPath.setInitialConditions()
 
                 //calculating and  ball flight animation
-                player.recalculateParabolaToFinalFlight()
+                shootingPath.recalculateParabolaToFinalFlight()
 
                 //increasing speed of draw ball path
-                player.increaseSpeedOFDrawBallPathForNextFound()
+                shootingPath.increaseSpeedOFDrawBallPathForNextFound()
             }
         });
 
