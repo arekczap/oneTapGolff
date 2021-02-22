@@ -39,3 +39,55 @@
     left: 0;
     background-image: url("assets/tile_ground01.png");
 }
+
+.hole {
+    position: absolute;
+    width: 128px;
+    height: 73px;
+    bottom: 95px;
+    left: 500px;
+    background-image: url("assets/object_hole.png");
+    background-repeat: no-repeat;
+}
+
+.stick {
+    position: absolute;
+    width: 18px;
+    height: 254px;
+    bottom: 73px;
+    left: 55px;
+    background-image: url("assets/object_flag_stick.png");
+    background-repeat: no-repeat;
+}
+
+
+
+.flag{
+    position: absolute;
+    width: 128px;
+    height: 128px;
+    bottom: 220px;
+    left: 73px;
+    animation: flagMove1 .3s infinite, flagMove2 .3s infinite;
+}
+
+@keyframes flagMove1 {
+    0% {
+        display: none;
+    }
+    100%{
+        background-image: url("assets/object_flag_anim02.png");
+    }
+}
+
+@keyframes flagMove2 {
+    0% {
+        background-image: url("assets/object_flag_anim01.png");
+    }
+    100%{
+        display: none;
+    }
+}
+
+
+

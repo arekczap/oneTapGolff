@@ -1,7 +1,15 @@
 import shootingPath from "./shotingPath";
+import playerBall from "./playerBall";
+import golfHole from "./golfHole"
+import utilities from "./utilities";
+import interfaceView from "./interfaceView";
+
+const grass = new Image();
+grass.src = require("/src/assets/tile_ground01.png");
+
+
 
 class InitEvents {
-
     init() {
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 32) {
@@ -9,27 +17,13 @@ class InitEvents {
             }
         });
 
-
         document.addEventListener("keyup", (e) => {
             if (e.keyCode === 32) {
-
-                //get distance to draw final path
-                shootingPath.getFinalDistancePath()
-
-                //set default values after drawing final path to final ball animation
-                shootingPath.setInitialConditions()
-
-                //calculating and  ball flight animation
-                shootingPath.recalculateParabolaToFinalFlight()
-
-                //increasing speed of draw ball path
-                shootingPath.increaseSpeedOFDrawBallPathForNextFound()
+                playerBall.flyingBall()
             }
         });
-
     }
 }
-
 const  initEvents = new InitEvents();
 initEvents.init()
 

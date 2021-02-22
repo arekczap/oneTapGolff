@@ -3,9 +3,8 @@
 
 class Utilities {
     constructor() {
-        this.canvas = document.getElementById("canvas");;
-        this.ctx = this.canvas.getContext("2d")
-
+        this.canvas = document.getElementById("canvas");
+        this.ctx = this.canvas.getContext("2d");
     }
 
 
@@ -25,13 +24,12 @@ class Utilities {
     drawImage(image, valueX, valueY) {
         this.ctx.drawImage(
             image,
-            image === "dot" ? valueX += 1 : valueX,
-            image === "dot" ? valueY += 10 : valueY,
+            valueX,
+            valueY,
             image.width,
             image.height
         );
     }
-
 }
 
 

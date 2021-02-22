@@ -1,12 +1,10 @@
     import shootingPath from "./shotingPath";
     import utilities from "./utilities";
-
-
-
+    import interfaceView from "./interfaceView";
+    import golfHole from "./golfHole";
 
     export const ball = new Image();
     ball.src = require("/src/assets/object_ball.png");
-
 
     class Player {
         constructor() {
@@ -15,37 +13,55 @@
         }
 
         //bal velocity
-         velocityBallFlight() {
+         setVelocityBallFlight() {
             shootingPath.pointXOfParabola+= this.velocityBall;
             shootingPath.y += this.velocityBall
         }
 
-        ballFinalFlight() {
-            let animationFlyingBall = requestAnimationFrame(this.ballFinalFlight.bind(this));
+        getBallFinalFlight() {
+            let animationFlyingBall = requestAnimationFrame(this.getBallFinalFlight.bind(this));
 
             //set ball velocity
-            this.velocityBallFlight();
+            this.setVelocityBallFlight();
 
             utilities.clearCanvasView();
+            interfaceView.pointsCounterView()
             shootingPath.calculateFlightPoints();
-            utilities.drawImage(ball, shootingPath.pointXOfParabola , shootingPath.y - this.correctionToFlightPosition/2 )
+            utilities.drawImage(ball, shootingPath.pointXOfParabola , shootingPath.y)
 
 
 
-            // wysokość na jaką ma spaść piłka
-            if (shootingPath.y >=  500) {
+
+
+            // algorytm do sprawdzania kolizji z dołkiem oraz zliczania punktów
+            if (shootingPath.y >  470 && shootingPath.y <  500 && shootingPath.pointXOfParabola > golfHole.newHerizontalValueForHole - 58 && shootingPath.pointXOfParabola < golfHole.newHerizontalValueForHole + 100 ){
                 cancelAnimationFrame(animationFlyingBall)
+                interfaceView.increaseActualScore()
+                golfHole.addGolfHole();
             }
 
+            if (shootingPath.y >  550 && shootingPath.y <  650 ) {
+                cancelAnimationFrame(animationFlyingBall)
+                interfaceView.resetPoints()
+            }
         }
 
 
 
+        flyingBall() {
+            //get distance to draw final path
+            shootingPath.getFinalDistancePath()
 
+            //set default values after drawing final path to final ball animation
+            shootingPath.setInitialConditions()
 
+            //calculating and  ball flight animation
+            shootingPath.recalculateParabolaToFinalFlight()
 
+            //increasing speed of draw ball path
+            shootingPath.increaseSpeedOFDrawBallPathForNextFound()
 
-
+        }
     }
 
     const playerBall = new Player();
