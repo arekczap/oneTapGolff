@@ -60,15 +60,14 @@
     background-repeat: no-repeat;
 }
 
-
-
 .flag{
     position: absolute;
     width: 128px;
     height: 128px;
     bottom: 220px;
     left: 73px;
-    animation: flagMove1 .3s infinite, flagMove2 .3s infinite;
+    /*animation: test 1s infinite;*/
+    animation: flagMove1 .5s infinite, flagMove2 .5s infinite;
 }
 
 @keyframes flagMove1 {
@@ -88,6 +87,3 @@
         display: none;
     }
 }
-
-
-

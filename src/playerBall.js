@@ -2,6 +2,7 @@
     import utilities from "./utilities";
     import interfaceView from "./interfaceView";
     import golfHole from "./golfHole";
+    import gameControler from "./gameControler";
 
     export const ball = new Image();
     ball.src = require("/src/assets/object_ball.png");
@@ -10,6 +11,7 @@
         constructor() {
             this.correctionToFlightPosition = 32;
             this.velocityBall = 10;
+            this.animationFlyingBall = null;
         }
 
         //bal velocity
@@ -19,7 +21,7 @@
         }
 
         getBallFinalFlight() {
-            let animationFlyingBall = requestAnimationFrame(this.getBallFinalFlight.bind(this));
+            this.animationFlyingBall = requestAnimationFrame(this.getBallFinalFlight.bind(this));
 
             //set ball velocity
             this.setVelocityBallFlight();
@@ -27,23 +29,9 @@
             utilities.clearCanvasView();
             interfaceView.pointsCounterView()
             shootingPath.calculateFlightPoints();
-            utilities.drawImage(ball, shootingPath.pointXOfParabola , shootingPath.y)
+            utilities.drawImage(utilities.ctx,ball, shootingPath.pointXOfParabola, shootingPath.y);
 
-
-
-
-
-            // algorytm do sprawdzania kolizji z dołkiem oraz zliczania punktów
-            if (shootingPath.y >  470 && shootingPath.y <  500 && shootingPath.pointXOfParabola > golfHole.newHerizontalValueForHole - 58 && shootingPath.pointXOfParabola < golfHole.newHerizontalValueForHole + 100 ){
-                cancelAnimationFrame(animationFlyingBall)
-                interfaceView.increaseActualScore()
-                golfHole.addGolfHole();
-            }
-
-            if (shootingPath.y >  550 && shootingPath.y <  650 ) {
-                cancelAnimationFrame(animationFlyingBall)
-                interfaceView.resetPoints()
-            }
+            gameControler.controlGameStep();
         }
 
 
@@ -66,7 +54,7 @@
 
     const playerBall = new Player();
     ball.onload = function () {
-        utilities.drawImage(ball,shootingPath.startPosOfBall,shootingPath.groundLevel)
+        utilities.drawImage(utilities.ctx,ball, shootingPath.startPosOfBall, shootingPath.groundLevel);
     }
 
     export default playerBall;

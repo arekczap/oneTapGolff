@@ -26,12 +26,24 @@ class InterfaceView {
         this.actualScore = 0;
         this.pointsCounterView()
     }
+
+
+    addGameOverView() {
+
+        // dodano obrazek tła
+        // utilities.drawImage()
+        backgroundMenu.onload = function () {
+            // utilities.drawImage(utilities.ctx2,backgroundMenu,100, 100)
+            utilities.ctx2.drawImage(backgroundMenu, 0, 0, utilities.canvas.width, utilities.canvas.height);
+
+        }
+    }
 }
 
 
 
 let interfaceView = new InterfaceView();
 interfaceView.pointsCounterView()
-
+interfaceView.addGameOverView()
 
 export default interfaceView

@@ -1,10 +1,11 @@
 
-
-
 class Utilities {
     constructor() {
         this.canvas = document.getElementById("canvas");
         this.ctx = this.canvas.getContext("2d");
+
+        //game over context
+        this.ctx2 = this.canvas.getContext("2d");
     }
 
 
@@ -21,15 +22,12 @@ class Utilities {
     }
 
 
-    drawImage(image, valueX, valueY) {
-        this.ctx.drawImage(
-            image,
-            valueX,
-            valueY,
-            image.width,
-            image.height
-        );
+    drawImage(context ,image, valueX, valueY) {
+        context.drawImage(image, valueX, valueY, image.width, image.height);
     }
+
+
+
 }
 
 

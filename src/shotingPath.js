@@ -73,7 +73,7 @@ class Path{
             i++
             this.pointXOfParabola += 50
             this.calculateFlightPoints();
-            utilities.drawImage(dot, this.pointXOfParabola + 10, this.y + 10)
+            utilities.drawImage(utilities.ctx, dot, this.pointXOfParabola + 10, this.y + 10);
 
         }
 
@@ -81,7 +81,7 @@ class Path{
             console.log("top")
         }
 
-        utilities.drawImage(ball,this.startPosOfBall,this.groundLevel)
+        utilities.drawImage(utilities.ctx,ball, this.startPosOfBall, this.groundLevel);
         this.setIncreasePathDistance();
     }
 }
