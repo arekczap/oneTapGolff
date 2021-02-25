@@ -1,12 +1,12 @@
-import "./interfaceView"
-import "./main.css";
 
-import "./initEvents"
+import "./gameControler"
 import "./shotingPath"
-import "./playerBall"
+import "./interfaceView"
+import "./golfHole"
+import "./main.css";
+import "./initEvents"
 import "./utilities"
 
-import "./golfHole"
-import "./gameControler"
+
 
 

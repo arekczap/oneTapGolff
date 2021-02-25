@@ -1,12 +1,13 @@
 import utilities from "./utilities";
 
+let gameOverView = new Image()
+gameOverView.src = require("/src/assets/tile_sky_color01.png");
 
-let backgroundMenu = new Image()
-backgroundMenu.src = require("/src/assets/tile_sky_color01.png");
 
 class InterfaceView {
     constructor() {
         this.actualScore = 0;
+        this.loadedWindow = false;
     }
 
     increaseActualScore() {
@@ -27,23 +28,30 @@ class InterfaceView {
         this.pointsCounterView()
     }
 
+    pressButtonToStart() {
+        utilities.ctx1.font = "bolder 40px Arial";
+        utilities.ctx.fillText("press Space to start", 250, 250);
+    }
 
-    addGameOverView() {
+    addGameOverText() {
+        utilities.ctx1.font = "bolder 100px Arial";
+        utilities.ctx.fillText("GAME OVER", 120, 200);
+    }
 
-        // dodano obrazek tła
-        // utilities.drawImage()
-        backgroundMenu.onload = function () {
-            // utilities.drawImage(utilities.ctx2,backgroundMenu,100, 100)
-            utilities.ctx2.drawImage(backgroundMenu, 0, 0, utilities.canvas.width, utilities.canvas.height);
-
-        }
+    gameOverView() {
+        this.addGameOverText();
+        this.pressButtonToStart();
     }
 }
 
 
 
 let interfaceView = new InterfaceView();
-interfaceView.pointsCounterView()
-interfaceView.addGameOverView()
+
+interfaceView.pointsCounterView();
+interfaceView.pressButtonToStart()
+
+
+
 
 export default interfaceView

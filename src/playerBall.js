@@ -9,9 +9,10 @@
 
     class Player {
         constructor() {
-            this.correctionToFlightPosition = 32;
             this.velocityBall = 10;
             this.animationFlyingBall = null;
+            this.ballIsFlyingNow = false
+
         }
 
         //bal velocity
@@ -30,11 +31,9 @@
             interfaceView.pointsCounterView()
             shootingPath.calculateFlightPoints();
             utilities.drawImage(utilities.ctx,ball, shootingPath.pointXOfParabola, shootingPath.y);
-
+            playerBall.ballIsFlyingNow = true;
             gameControler.controlGameStep();
         }
-
-
 
         flyingBall() {
             //get distance to draw final path
@@ -48,13 +47,12 @@
 
             //increasing speed of draw ball path
             shootingPath.increaseSpeedOFDrawBallPathForNextFound()
-
         }
     }
 
     const playerBall = new Player();
-    ball.onload = function () {
-        utilities.drawImage(utilities.ctx,ball, shootingPath.startPosOfBall, shootingPath.groundLevel);
+    window.onload = function () {
+        utilities.drawImage(utilities.ctx, ball, shootingPath.startPosOfBall, shootingPath.groundLevel);
     }
 
     export default playerBall;

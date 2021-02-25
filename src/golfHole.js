@@ -17,7 +17,6 @@ class GolfHole {
 
     generateNextHorizontalValueForHole() {
         this.newHerizontalValueForHole = Math.floor(Math.random() * (700 - 250 + 1)) + 250
-        console.log(this.newHerizontalValueForHole)
     }
 }
 

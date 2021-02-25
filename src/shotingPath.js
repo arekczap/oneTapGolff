@@ -3,6 +3,7 @@ import playerBall from "./playerBall";
 import {ball} from "./playerBall";
 import initEvents from "./initEvents";
 import interfaceView from "./interfaceView";
+import gameControler from "./gameControler";
 
 const dot = new Image()
 dot.src = require("/src/assets/object_dot.png");
@@ -14,12 +15,12 @@ class Path{
         this.groundLevel =  475;
         this.pointXOfParabola = 0;
         this.startPosOfBall = 75;
-        this.startDrawingRangeOfPath = 70;
+        this.startDrawingRangeOfPath = 100;
         this.parabolaFinalDistance = 200;
         this.parabolaTopPoint = -5
-        this.vx = 5;
-        this.b = .1;
-        this.c = .1;
+        this.vx = 3;
+        this.b = 0;
+        this.c = 0;
         this.y = 0;
     }
 
@@ -38,8 +39,13 @@ class Path{
     }
 
     recalculateParabolaToFinalFlight() {
+
         this.calculateShotPath(this.parabolaFinalDistance);
         playerBall.getBallFinalFlight();
+    }
+
+    resetVelocityAfterGameOverToInitState() {
+        this.vx = 3;
     }
 
     getFinalDistancePath(){
@@ -52,7 +58,6 @@ class Path{
             (this.startPosOfBall - x2);
         this.c = this.groundLevel - this.a * this.startPosOfBall * this.startPosOfBall - this.b * this.startPosOfBall;
         this.pointXOfParabola = this.startPosOfBall;
-
         interfaceView.pointsCounterView()
     }
 
@@ -62,25 +67,17 @@ class Path{
         this.pointXOfParabola++;
     }
 
-    updateFlightPath(state) {
+    updateFlightPath() {
         this.parabolaTopPoint = this.b * this.b - 4 * this.a * this.c
-
         utilities.clearCanvasView();
         this.calculateShotPath(this.startDrawingRangeOfPath);
-
         let i = this.startPosOfBall;
         while(i < this.startDrawingRangeOfPath) {
             i++
             this.pointXOfParabola += 50
             this.calculateFlightPoints();
             utilities.drawImage(utilities.ctx, dot, this.pointXOfParabola + 10, this.y + 10);
-
         }
-
-        if (this.parabolaTopPoint >= .1) {
-            console.log("top")
-        }
-
         utilities.drawImage(utilities.ctx,ball, this.startPosOfBall, this.groundLevel);
         this.setIncreasePathDistance();
     }

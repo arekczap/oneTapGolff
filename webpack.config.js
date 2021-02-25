@@ -43,46 +43,6 @@ module.exports = {
                     },
                 ],
             },
-            // {
-            //     test: /\.(png|jp(e*)g|svg)$/,
-            //     use: [{
-            //         loader: 'file-loader',
-            //         options: {
-            //
-            //             name: 'assets/[hash]-[name].[ext]',
-            //             output: {
-            //                 path: path.resolve(__dirname, 'dist')
-            //             },
-            //         }
-            //     }]
-            // },
-            // {
-            //     test: /\.(png|jpe?g|gif)$/i,
-            //     use: [
-            //         {
-            //             loader: 'url-loader',
-            //             options: {
-            //                 //                 loader: 'file-loader?name=/img/[name].[ext]',
-            //                 //                 // name: '[name]-[hash].[ext]',
-            //                 name: '[name]-[hash].[ext]',
-            //                 outputPath: 'images'
-            //             },
-            //         },
-            //     ],
-            // },
-            // {
-            //     test: /\.(png|jpe?g|gif|webp|awif|svg)$/i,
-            //     use: [
-            //         {
-            //             loader: 'file-loader',
-            //             options: {
-            //                 loader: 'file-loader?name=/img/[name].[ext]',
-            //                 // name: '[name]-[hash].[ext]',
-            //                 outputPath: 'images'
-            //             },
-            //         },
-            //     ],
-            // },
             {
                 test: /\.html$/,
                 use: ["html-loader"]

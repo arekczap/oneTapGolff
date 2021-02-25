@@ -1,6 +1,470 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./src/gameControler.js":
+/*!******************************!*\
+  !*** ./src/gameControler.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _shotingPath__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shotingPath */ "./src/shotingPath.js");
+/* harmony import */ var _golfHole__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./golfHole */ "./src/golfHole.js");
+/* harmony import */ var _interfaceView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./interfaceView */ "./src/interfaceView.js");
+/* harmony import */ var _playerBall__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./playerBall */ "./src/playerBall.js");
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var GameController = /*#__PURE__*/function () {
+  function GameController() {
+    _classCallCheck(this, GameController);
+  }
+
+  _createClass(GameController, [{
+    key: "controlGameStep",
+    value: function controlGameStep() {
+      //reset top parabola
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.parabolaTopPoint = -5; // check collision with hole else game over
+
+      if (_shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y > 470 && _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y < 500 && _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.pointXOfParabola > _golfHole__WEBPACK_IMPORTED_MODULE_1__.default.newHerizontalValueForHole - 30 && _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.pointXOfParabola < _golfHole__WEBPACK_IMPORTED_MODULE_1__.default.newHerizontalValueForHole + 80) {
+        cancelAnimationFrame(_playerBall__WEBPACK_IMPORTED_MODULE_3__.default.animationFlyingBall);
+        _interfaceView__WEBPACK_IMPORTED_MODULE_2__.default.increaseActualScore();
+        _golfHole__WEBPACK_IMPORTED_MODULE_1__.default.addGolfHole();
+        _utilities__WEBPACK_IMPORTED_MODULE_4__.default.drawImage(_utilities__WEBPACK_IMPORTED_MODULE_4__.default.ctx, _playerBall__WEBPACK_IMPORTED_MODULE_3__.ball, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.startPosOfBall, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.groundLevel);
+        _playerBall__WEBPACK_IMPORTED_MODULE_3__.default.ballIsFlyingNow = false;
+      }
+
+      if (_shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y > 500 && _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y < 550) {
+        cancelAnimationFrame(_playerBall__WEBPACK_IMPORTED_MODULE_3__.default.animationFlyingBall);
+        _interfaceView__WEBPACK_IMPORTED_MODULE_2__.default.resetPoints();
+        _interfaceView__WEBPACK_IMPORTED_MODULE_2__.default.gameOverView();
+        _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.resetVelocityAfterGameOverToInitState();
+        _playerBall__WEBPACK_IMPORTED_MODULE_3__.default.ballIsFlyingNow = false;
+      }
+    }
+  }]);
+
+  return GameController;
+}();
+
+var gameController = new GameController();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (gameController);
+
+/***/ }),
+
+/***/ "./src/golfHole.js":
+/*!*************************!*\
+  !*** ./src/golfHole.js ***!
+  \*************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var GolfHole = /*#__PURE__*/function () {
+  function GolfHole() {
+    _classCallCheck(this, GolfHole);
+
+    this.verticalHolePositionSelector = document.querySelector(".hole");
+    this.newHerizontalValueForHole = 500;
+  }
+
+  _createClass(GolfHole, [{
+    key: "addGolfHole",
+    value: function addGolfHole() {
+      this.generateNextHorizontalValueForHole();
+      this.drawGolfHole();
+    }
+  }, {
+    key: "drawGolfHole",
+    value: function drawGolfHole() {
+      this.verticalHolePositionSelector.style.left = this.newHerizontalValueForHole + "px";
+    }
+  }, {
+    key: "generateNextHorizontalValueForHole",
+    value: function generateNextHorizontalValueForHole() {
+      this.newHerizontalValueForHole = Math.floor(Math.random() * (700 - 250 + 1)) + 250;
+    }
+  }]);
+
+  return GolfHole;
+}();
+
+var golfHole = new GolfHole(); // golfHole.addGolfHole();
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (golfHole);
+
+/***/ }),
+
+/***/ "./src/initEvents.js":
+/*!***************************!*\
+  !*** ./src/initEvents.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _shotingPath__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shotingPath */ "./src/shotingPath.js");
+/* harmony import */ var _playerBall__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playerBall */ "./src/playerBall.js");
+/* harmony import */ var _gameControler__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./gameControler */ "./src/gameControler.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+var grass = new Image();
+grass.src = __webpack_require__(/*! ../../src/assets/tile_ground01.png */ "./src/assets/tile_ground01.png");
+
+var InitEvents = /*#__PURE__*/function () {
+  function InitEvents() {
+    _classCallCheck(this, InitEvents);
+  }
+
+  _createClass(InitEvents, [{
+    key: "init",
+    value: function init() {
+      document.addEventListener("keydown", function (e) {
+        if (e.keyCode === 32 && !_playerBall__WEBPACK_IMPORTED_MODULE_1__.default.ballIsFlyingNow) {
+          _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.updateFlightPath();
+        }
+      });
+      document.addEventListener("keyup", function (e) {
+        if (e.keyCode === 32 && !_playerBall__WEBPACK_IMPORTED_MODULE_1__.default.ballIsFlyingNow) {
+          _playerBall__WEBPACK_IMPORTED_MODULE_1__.default.flyingBall();
+        }
+      });
+    }
+  }]);
+
+  return InitEvents;
+}();
+
+var initEvents = new InitEvents();
+initEvents.init();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (initEvents);
+
+/***/ }),
+
+/***/ "./src/interfaceView.js":
+/*!******************************!*\
+  !*** ./src/interfaceView.js ***!
+  \******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+var gameOverView = new Image();
+gameOverView.src = __webpack_require__(/*! ../../src/assets/tile_sky_color01.png */ "./src/assets/tile_sky_color01.png");
+
+var InterfaceView = /*#__PURE__*/function () {
+  function InterfaceView() {
+    _classCallCheck(this, InterfaceView);
+
+    this.actualScore = 0;
+    this.loadedWindow = false;
+  }
+
+  _createClass(InterfaceView, [{
+    key: "increaseActualScore",
+    value: function increaseActualScore() {
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.clearCanvasView();
+      this.actualScore += 1;
+      this.pointsCounterView();
+    }
+  }, {
+    key: "pointsCounterView",
+    value: function pointsCounterView() {
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx.font = "bolder 80px Arial";
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx.fillStyle = "yellow";
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx.fillText(this.actualScore, 780, 100);
+    }
+  }, {
+    key: "resetPoints",
+    value: function resetPoints() {
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.clearCanvasView();
+      this.actualScore = 0;
+      this.pointsCounterView();
+    }
+  }, {
+    key: "pressButtonToStart",
+    value: function pressButtonToStart() {
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx1.font = "bolder 40px Arial";
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx.fillText("press Space to start", 250, 250);
+    }
+  }, {
+    key: "addGameOverText",
+    value: function addGameOverText() {
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx1.font = "bolder 100px Arial";
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx.fillText("GAME OVER", 120, 200);
+    }
+  }, {
+    key: "gameOverView",
+    value: function gameOverView() {
+      this.addGameOverText();
+      this.pressButtonToStart();
+    }
+  }]);
+
+  return InterfaceView;
+}();
+
+var interfaceView = new InterfaceView();
+interfaceView.pointsCounterView();
+interfaceView.pressButtonToStart();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (interfaceView);
+
+/***/ }),
+
+/***/ "./src/playerBall.js":
+/*!***************************!*\
+  !*** ./src/playerBall.js ***!
+  \***************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "ball": () => (/* binding */ ball),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _shotingPath__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./shotingPath */ "./src/shotingPath.js");
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
+/* harmony import */ var _interfaceView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./interfaceView */ "./src/interfaceView.js");
+/* harmony import */ var _golfHole__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./golfHole */ "./src/golfHole.js");
+/* harmony import */ var _gameControler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gameControler */ "./src/gameControler.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+var ball = new Image();
+ball.src = __webpack_require__(/*! ../../src/assets/object_ball.png */ "./src/assets/object_ball.png");
+
+var Player = /*#__PURE__*/function () {
+  function Player() {
+    _classCallCheck(this, Player);
+
+    this.velocityBall = 10;
+    this.animationFlyingBall = null;
+    this.ballIsFlyingNow = false;
+  } //bal velocity
+
+
+  _createClass(Player, [{
+    key: "setVelocityBallFlight",
+    value: function setVelocityBallFlight() {
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.pointXOfParabola += this.velocityBall;
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y += this.velocityBall;
+    }
+  }, {
+    key: "getBallFinalFlight",
+    value: function getBallFinalFlight() {
+      this.animationFlyingBall = requestAnimationFrame(this.getBallFinalFlight.bind(this)); //set ball velocity
+
+      this.setVelocityBallFlight();
+      _utilities__WEBPACK_IMPORTED_MODULE_1__.default.clearCanvasView();
+      _interfaceView__WEBPACK_IMPORTED_MODULE_2__.default.pointsCounterView();
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.calculateFlightPoints();
+      _utilities__WEBPACK_IMPORTED_MODULE_1__.default.drawImage(_utilities__WEBPACK_IMPORTED_MODULE_1__.default.ctx, ball, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.pointXOfParabola, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.y);
+      playerBall.ballIsFlyingNow = true;
+      _gameControler__WEBPACK_IMPORTED_MODULE_4__.default.controlGameStep();
+    }
+  }, {
+    key: "flyingBall",
+    value: function flyingBall() {
+      //get distance to draw final path
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.getFinalDistancePath(); //set default values after drawing final path to final ball animation
+
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.setInitialConditions(); //calculating and  ball flight animation
+
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.recalculateParabolaToFinalFlight(); //increasing speed of draw ball path
+
+      _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.increaseSpeedOFDrawBallPathForNextFound();
+    }
+  }]);
+
+  return Player;
+}();
+
+var playerBall = new Player();
+
+window.onload = function () {
+  _utilities__WEBPACK_IMPORTED_MODULE_1__.default.drawImage(_utilities__WEBPACK_IMPORTED_MODULE_1__.default.ctx, ball, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.startPosOfBall, _shotingPath__WEBPACK_IMPORTED_MODULE_0__.default.groundLevel);
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (playerBall);
+
+/***/ }),
+
+/***/ "./src/shotingPath.js":
+/*!****************************!*\
+  !*** ./src/shotingPath.js ***!
+  \****************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
+/* harmony import */ var _playerBall__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./playerBall */ "./src/playerBall.js");
+/* harmony import */ var _initEvents__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./initEvents */ "./src/initEvents.js");
+/* harmony import */ var _interfaceView__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./interfaceView */ "./src/interfaceView.js");
+/* harmony import */ var _gameControler__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./gameControler */ "./src/gameControler.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+
+
+
+
+var dot = new Image();
+dot.src = __webpack_require__(/*! ../../src/assets/object_dot.png */ "./src/assets/object_dot.png");
+
+var Path = /*#__PURE__*/function () {
+  function Path() {
+    _classCallCheck(this, Path);
+
+    this.a = 0.0030;
+    this.groundLevel = 475;
+    this.pointXOfParabola = 0;
+    this.startPosOfBall = 75;
+    this.startDrawingRangeOfPath = 100;
+    this.parabolaFinalDistance = 200;
+    this.parabolaTopPoint = -5;
+    this.vx = 3;
+    this.b = 0;
+    this.c = 0;
+    this.y = 0;
+  }
+
+  _createClass(Path, [{
+    key: "setInitialConditions",
+    value: function setInitialConditions() {
+      this.b = 1;
+      this.c = 1;
+      this.startDrawingRangeOfPath = 100;
+    }
+  }, {
+    key: "setIncreasePathDistance",
+    value: function setIncreasePathDistance() {
+      this.startDrawingRangeOfPath += this.vx;
+    }
+  }, {
+    key: "increaseSpeedOFDrawBallPathForNextFound",
+    value: function increaseSpeedOFDrawBallPathForNextFound() {
+      this.vx += 1;
+    }
+  }, {
+    key: "recalculateParabolaToFinalFlight",
+    value: function recalculateParabolaToFinalFlight() {
+      this.calculateShotPath(this.parabolaFinalDistance);
+      _playerBall__WEBPACK_IMPORTED_MODULE_1__.default.getBallFinalFlight();
+    }
+  }, {
+    key: "resetVelocityAfterGameOverToInitState",
+    value: function resetVelocityAfterGameOverToInitState() {
+      this.vx = 3;
+    }
+  }, {
+    key: "getFinalDistancePath",
+    value: function getFinalDistancePath() {
+      this.parabolaFinalDistance = this.startDrawingRangeOfPath;
+    }
+  }, {
+    key: "calculateShotPath",
+    value: function calculateShotPath(x2) {
+      this.b = (this.groundLevel - this.groundLevel - this.a * (this.startPosOfBall * this.startPosOfBall - x2 * x2)) / (this.startPosOfBall - x2);
+      this.c = this.groundLevel - this.a * this.startPosOfBall * this.startPosOfBall - this.b * this.startPosOfBall;
+      this.pointXOfParabola = this.startPosOfBall;
+      _interfaceView__WEBPACK_IMPORTED_MODULE_3__.default.pointsCounterView();
+    }
+  }, {
+    key: "calculateFlightPoints",
+    value: function calculateFlightPoints() {
+      this.y = Math.round(this.a * this.pointXOfParabola * this.pointXOfParabola + this.b * this.pointXOfParabola + this.c);
+      this.pointXOfParabola++;
+    }
+  }, {
+    key: "updateFlightPath",
+    value: function updateFlightPath() {
+      this.parabolaTopPoint = this.b * this.b - 4 * this.a * this.c;
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.clearCanvasView();
+      this.calculateShotPath(this.startDrawingRangeOfPath);
+      var i = this.startPosOfBall;
+
+      while (i < this.startDrawingRangeOfPath) {
+        i++;
+        this.pointXOfParabola += 50;
+        this.calculateFlightPoints();
+        _utilities__WEBPACK_IMPORTED_MODULE_0__.default.drawImage(_utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx, dot, this.pointXOfParabola + 10, this.y + 10);
+      }
+
+      _utilities__WEBPACK_IMPORTED_MODULE_0__.default.drawImage(_utilities__WEBPACK_IMPORTED_MODULE_0__.default.ctx, _playerBall__WEBPACK_IMPORTED_MODULE_1__.ball, this.startPosOfBall, this.groundLevel);
+      this.setIncreasePathDistance();
+    }
+  }]);
+
+  return Path;
+}();
+
+var shootingPath = new Path();
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (shootingPath);
+
+/***/ }),
+
 /***/ "./src/utilities.js":
 /*!**************************!*\
   !*** ./src/utilities.js ***!
@@ -23,8 +487,8 @@ var Utilities = /*#__PURE__*/function () {
     _classCallCheck(this, Utilities);
 
     this.canvas = document.getElementById("canvas");
-    ;
     this.ctx = this.canvas.getContext("2d");
+    this.ctx1 = this.canvas.getContext("2d");
   }
 
   _createClass(Utilities, [{
@@ -42,8 +506,8 @@ var Utilities = /*#__PURE__*/function () {
     }
   }, {
     key: "drawImage",
-    value: function drawImage(image, valueX, valueY) {
-      this.ctx.drawImage(image, image === "dot" ? valueX += 1 : valueX, image === "dot" ? valueY += 10 : valueY, image.width, image.height);
+    value: function drawImage(context, image, valueX, valueY) {
+      context.drawImage(image, valueX, valueY, image.width, image.height);
     }
   }]);
 
@@ -79,7 +543,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _assets_tile_ground_down_01_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_assets_tile_ground_down_01_png__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _assets_tile_ground01_png__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./assets/tile_ground01.png */ "./src/assets/tile_ground01.png");
 /* harmony import */ var _assets_tile_ground01_png__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_assets_tile_ground01_png__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _assets_object_hole_png__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./assets/object_hole.png */ "./src/assets/object_hole.png");
+/* harmony import */ var _assets_object_hole_png__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_assets_object_hole_png__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _assets_object_flag_stick_png__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./assets/object_flag_stick.png */ "./src/assets/object_flag_stick.png");
+/* harmony import */ var _assets_object_flag_stick_png__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_assets_object_flag_stick_png__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _assets_object_flag_anim02_png__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./assets/object_flag_anim02.png */ "./src/assets/object_flag_anim02.png");
+/* harmony import */ var _assets_object_flag_anim02_png__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_assets_object_flag_anim02_png__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _assets_object_flag_anim01_png__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./assets/object_flag_anim01.png */ "./src/assets/object_flag_anim01.png");
+/* harmony import */ var _assets_object_flag_anim01_png__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_assets_object_flag_anim01_png__WEBPACK_IMPORTED_MODULE_9__);
 // Imports
+
+
+
+
 
 
 
@@ -90,8 +566,12 @@ var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBP
 var ___CSS_LOADER_URL_REPLACEMENT_0___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_background_png__WEBPACK_IMPORTED_MODULE_3___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_1___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_tile_ground_down_01_png__WEBPACK_IMPORTED_MODULE_4___default()));
 var ___CSS_LOADER_URL_REPLACEMENT_2___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_tile_ground01_png__WEBPACK_IMPORTED_MODULE_5___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_3___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_object_hole_png__WEBPACK_IMPORTED_MODULE_6___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_4___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_object_flag_stick_png__WEBPACK_IMPORTED_MODULE_7___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_5___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_object_flag_anim02_png__WEBPACK_IMPORTED_MODULE_8___default()));
+var ___CSS_LOADER_URL_REPLACEMENT_6___ = _node_modules_css_loader_dist_runtime_getUrl_js__WEBPACK_IMPORTED_MODULE_2___default()((_assets_object_flag_anim01_png__WEBPACK_IMPORTED_MODULE_9___default()));
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\n#canvas,\r\n.wrapper {\r\n    position: absolute;\r\n    width: 900px;\r\n    height: 700px;\r\n    border: 1px solid black;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n#canvas {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n    background-position-y: -150px;\r\n    background-repeat: repeat-x;\r\n    background-size: cover;\r\n}\r\n\r\n.ground {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 40px;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.grass {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 128px;\r\n    bottom: 40px;\r\n    left: 0;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\r\n}\r\n", "",{"version":3,"sources":["webpack://./src/main.css"],"names":[],"mappings":"AAAA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;AAC1B;;AAEA;;IAEI,kBAAkB;IAClB,YAAY;IACZ,aAAa;IACb,uBAAuB;IACvB,QAAQ;IACR,SAAS;IACT,gCAAgC;AACpC;;AAEA;IACI,yDAA8C;IAC9C,6BAA6B;IAC7B,2BAA2B;IAC3B,sBAAsB;AAC1B;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,YAAY;IACZ,SAAS;IACT,OAAO;IACP,yDAAuD;AAC3D;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,aAAa;IACb,YAAY;IACZ,OAAO;IACP,yDAAiD;AACrD","sourcesContent":["* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\n#canvas,\r\n.wrapper {\r\n    position: absolute;\r\n    width: 900px;\r\n    height: 700px;\r\n    border: 1px solid black;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n#canvas {\r\n    background-image: url(\"assets/background.png\");\r\n    background-position-y: -150px;\r\n    background-repeat: repeat-x;\r\n    background-size: cover;\r\n}\r\n\r\n.ground {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 40px;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-image: url(\"assets/tile_ground_down_01.png\");\r\n}\r\n\r\n.grass {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 128px;\r\n    bottom: 40px;\r\n    left: 0;\r\n    background-image: url(\"assets/tile_ground01.png\");\r\n}\r\n"],"sourceRoot":""}]);
+___CSS_LOADER_EXPORT___.push([module.id, "* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\n#canvas,\r\n.wrapper {\r\n    position: absolute;\r\n    width: 900px;\r\n    height: 700px;\r\n    border: 1px solid black;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n#canvas {\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_0___ + ");\r\n    background-position-y: -150px;\r\n    background-repeat: repeat-x;\r\n    background-size: cover;\r\n    z-index: 0;\r\n}\r\n\r\n.ground {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 40px;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_1___ + ");\r\n}\r\n\r\n.grass {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 128px;\r\n    bottom: 40px;\r\n    left: 0;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_2___ + ");\r\n}\r\n\r\n.hole {\r\n    position: absolute;\r\n    width: 128px;\r\n    height: 73px;\r\n    bottom: 95px;\r\n    left: 500px;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_3___ + ");\r\n    background-repeat: no-repeat;\r\n    z-index: 0;\r\n}\r\n\r\n.stick {\r\n    position: absolute;\r\n    width: 18px;\r\n    height: 254px;\r\n    bottom: 73px;\r\n    left: 55px;\r\n    background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_4___ + ");\r\n    background-repeat: no-repeat;\r\n    z-index: 0;\r\n}\r\n\r\n.flag{\r\n    position: absolute;\r\n    width: 128px;\r\n    height: 128px;\r\n    bottom: 220px;\r\n    left: 73px;\r\n    animation: flagMove1 .5s infinite, flagMove2 .5s infinite;\r\n    z-index: -1;\r\n}\r\n\r\n@keyframes flagMove1 {\r\n    0% {\r\n        display: none;\r\n    }\r\n    100%{\r\n        background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_5___ + ");\r\n    }\r\n}\r\n\r\n@keyframes flagMove2 {\r\n    0% {\r\n        background-image: url(" + ___CSS_LOADER_URL_REPLACEMENT_6___ + ");\r\n    }\r\n    100%{\r\n        display: none;\r\n    }\r\n}", "",{"version":3,"sources":["webpack://./src/main.css"],"names":[],"mappings":"AAAA;IACI,SAAS;IACT,UAAU;IACV,sBAAsB;AAC1B;;AAEA;;IAEI,kBAAkB;IAClB,YAAY;IACZ,aAAa;IACb,uBAAuB;IACvB,QAAQ;IACR,SAAS;IACT,gCAAgC;AACpC;;AAEA;IACI,yDAA8C;IAC9C,6BAA6B;IAC7B,2BAA2B;IAC3B,sBAAsB;IACtB,UAAU;AACd;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,YAAY;IACZ,SAAS;IACT,OAAO;IACP,yDAAuD;AAC3D;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,aAAa;IACb,YAAY;IACZ,OAAO;IACP,yDAAiD;AACrD;;AAEA;IACI,kBAAkB;IAClB,YAAY;IACZ,YAAY;IACZ,YAAY;IACZ,WAAW;IACX,yDAA+C;IAC/C,4BAA4B;IAC5B,UAAU;AACd;;AAEA;IACI,kBAAkB;IAClB,WAAW;IACX,aAAa;IACb,YAAY;IACZ,UAAU;IACV,yDAAqD;IACrD,4BAA4B;IAC5B,UAAU;AACd;;AAEA;IACI,kBAAkB;IAClB,YAAY;IACZ,aAAa;IACb,aAAa;IACb,UAAU;IACV,yDAAyD;IACzD,WAAW;AACf;;AAEA;IACI;QACI,aAAa;IACjB;IACA;QACI,yDAAsD;IAC1D;AACJ;;AAEA;IACI;QACI,yDAAsD;IAC1D;IACA;QACI,aAAa;IACjB;AACJ","sourcesContent":["* {\r\n    margin: 0;\r\n    padding: 0;\r\n    box-sizing: border-box;\r\n}\r\n\r\n#canvas,\r\n.wrapper {\r\n    position: absolute;\r\n    width: 900px;\r\n    height: 700px;\r\n    border: 1px solid black;\r\n    top: 50%;\r\n    left: 50%;\r\n    transform: translate(-50%, -50%);\r\n}\r\n\r\n#canvas {\r\n    background-image: url(\"assets/background.png\");\r\n    background-position-y: -150px;\r\n    background-repeat: repeat-x;\r\n    background-size: cover;\r\n    z-index: 0;\r\n}\r\n\r\n.ground {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 40px;\r\n    bottom: 0;\r\n    left: 0;\r\n    background-image: url(\"assets/tile_ground_down_01.png\");\r\n}\r\n\r\n.grass {\r\n    position: absolute;\r\n    width: 100%;\r\n    height: 128px;\r\n    bottom: 40px;\r\n    left: 0;\r\n    background-image: url(\"assets/tile_ground01.png\");\r\n}\r\n\r\n.hole {\r\n    position: absolute;\r\n    width: 128px;\r\n    height: 73px;\r\n    bottom: 95px;\r\n    left: 500px;\r\n    background-image: url(\"assets/object_hole.png\");\r\n    background-repeat: no-repeat;\r\n    z-index: 0;\r\n}\r\n\r\n.stick {\r\n    position: absolute;\r\n    width: 18px;\r\n    height: 254px;\r\n    bottom: 73px;\r\n    left: 55px;\r\n    background-image: url(\"assets/object_flag_stick.png\");\r\n    background-repeat: no-repeat;\r\n    z-index: 0;\r\n}\r\n\r\n.flag{\r\n    position: absolute;\r\n    width: 128px;\r\n    height: 128px;\r\n    bottom: 220px;\r\n    left: 73px;\r\n    animation: flagMove1 .5s infinite, flagMove2 .5s infinite;\r\n    z-index: -1;\r\n}\r\n\r\n@keyframes flagMove1 {\r\n    0% {\r\n        display: none;\r\n    }\r\n    100%{\r\n        background-image: url(\"assets/object_flag_anim02.png\");\r\n    }\r\n}\r\n\r\n@keyframes flagMove2 {\r\n    0% {\r\n        background-image: url(\"assets/object_flag_anim01.png\");\r\n    }\r\n    100%{\r\n        display: none;\r\n    }\r\n}"],"sourceRoot":""}]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -270,6 +750,66 @@ module.exports = __webpack_require__.p + "assets/14db8644caeb3f4298c7e18aa1d6715
 
 /***/ }),
 
+/***/ "./src/assets/object_ball.png":
+/*!************************************!*\
+  !*** ./src/assets/object_ball.png ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/8152f7183fd315345774f6fb1464d5d7-object_ball.png";
+
+/***/ }),
+
+/***/ "./src/assets/object_dot.png":
+/*!***********************************!*\
+  !*** ./src/assets/object_dot.png ***!
+  \***********************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/d77a6ae75a3002decf4046ba367346ca-object_dot.png";
+
+/***/ }),
+
+/***/ "./src/assets/object_flag_anim01.png":
+/*!*******************************************!*\
+  !*** ./src/assets/object_flag_anim01.png ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/82a486e453208a1db59aa576ae5f0107-object_flag_anim01.png";
+
+/***/ }),
+
+/***/ "./src/assets/object_flag_anim02.png":
+/*!*******************************************!*\
+  !*** ./src/assets/object_flag_anim02.png ***!
+  \*******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/931556da8446e72ae175b55c13b713b6-object_flag_anim02.png";
+
+/***/ }),
+
+/***/ "./src/assets/object_flag_stick.png":
+/*!******************************************!*\
+  !*** ./src/assets/object_flag_stick.png ***!
+  \******************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/a5cf65c251a0a6c2f3ca1bd56134da9b-object_flag_stick.png";
+
+/***/ }),
+
+/***/ "./src/assets/object_hole.png":
+/*!************************************!*\
+  !*** ./src/assets/object_hole.png ***!
+  \************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/7dd03b308dc5bdd4bafb609295055a0e-object_hole.png";
+
+/***/ }),
+
 /***/ "./src/assets/tile_ground01.png":
 /*!**************************************!*\
   !*** ./src/assets/tile_ground01.png ***!
@@ -287,6 +827,16 @@ module.exports = __webpack_require__.p + "assets/6258fdf2289439c72e1dd290a1d884b
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
 module.exports = __webpack_require__.p + "assets/d7013faaba8a349d3d7c1b81ca4d054a-tile_ground_down_01.png";
+
+/***/ }),
+
+/***/ "./src/assets/tile_sky_color01.png":
+/*!*****************************************!*\
+  !*** ./src/assets/tile_sky_color01.png ***!
+  \*****************************************/
+/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
+
+module.exports = __webpack_require__.p + "assets/317c344de6df48a91f7924be4a43d546-tile_sky_color01.png";
 
 /***/ }),
 
@@ -706,13 +1256,20 @@ var __webpack_exports__ = {};
   !*** ./src/game.js ***!
   \*********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./main.css */ "./src/main.css");
-/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
- // import "./initEvents"
-// import "./shotingPath"
-// import "./playerBall"
+/* harmony import */ var _gameControler__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./gameControler */ "./src/gameControler.js");
+/* harmony import */ var _shotingPath__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./shotingPath */ "./src/shotingPath.js");
+/* harmony import */ var _interfaceView__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./interfaceView */ "./src/interfaceView.js");
+/* harmony import */ var _golfHole__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./golfHole */ "./src/golfHole.js");
+/* harmony import */ var _main_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./main.css */ "./src/main.css");
+/* harmony import */ var _initEvents__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./initEvents */ "./src/initEvents.js");
+/* harmony import */ var _utilities__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./utilities */ "./src/utilities.js");
 
- // ========================================================================================================
+
+
+
+
+
+
 })();
 
 /******/ })()

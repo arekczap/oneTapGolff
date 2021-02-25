@@ -20,6 +20,7 @@
     background-position-y: -150px;
     background-repeat: repeat-x;
     background-size: cover;
+    z-index: 0;
 }
 
 .ground {
@@ -48,6 +49,7 @@
     left: 500px;
     background-image: url("assets/object_hole.png");
     background-repeat: no-repeat;
+    z-index: 0;
 }
 
 .stick {
@@ -58,6 +60,7 @@
     left: 55px;
     background-image: url("assets/object_flag_stick.png");
     background-repeat: no-repeat;
+    z-index: 0;
 }
 
 .flag{
@@ -66,8 +69,8 @@
     height: 128px;
     bottom: 220px;
     left: 73px;
-    /*animation: test 1s infinite;*/
     animation: flagMove1 .5s infinite, flagMove2 .5s infinite;
+    z-index: -1;
 }
 
 @keyframes flagMove1 {
