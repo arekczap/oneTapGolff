@@ -1,7 +1,6 @@
 # oneTapGame
 
-## Live
-Link: https://onetapgolf.arekczapski.site/
+## Live: https://onetapgolf.arekczapski.site/
 
 ## Getting Started
 This repository is configured to be as simple as possible
